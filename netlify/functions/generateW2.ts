@@ -69,26 +69,26 @@ async function generateW2PDF(w2: {
   page.drawText((w2.employeeCityStateZip || "").substring(0, 50), { x, y, font, size: 9 });
   y -= 40;
 
-  page.drawText("1 Wages, tips, other compensation", { x, y + boxH + 4, font, size: 7 });
+  page.drawText("1 Wages, tips, other compensation", { x, y: y + boxH + 4, font, size: 7 });
   page.drawRectangle({ x, y, width: boxW, height: boxH });
   page.drawText(formatBox(w2.wages), { x: x + 4, y: y + 6, font, size: 10 });
-  page.drawText("2 Federal income tax withheld", { x: x + boxW + gap, y + boxH + 4, font, size: 7 });
+  page.drawText("2 Federal income tax withheld", { x: x + boxW + gap, y: y + boxH + 4, font, size: 7 });
   page.drawRectangle({ x: x + boxW + gap, y, width: boxW, height: boxH });
   page.drawText(formatBox(w2.federalTaxWithheld), { x: x + boxW + gap + 4, y: y + 6, font, size: 10 });
   y -= boxH + gap;
 
-  page.drawText("3 Social security wages", { x, y + boxH + 4, font, size: 7 });
+  page.drawText("3 Social security wages", { x, y: y + boxH + 4, font, size: 7 });
   page.drawRectangle({ x, y, width: boxW, height: boxH });
   page.drawText(formatBox(w2.socialSecurityWages), { x: x + 4, y: y + 6, font, size: 10 });
-  page.drawText("4 Social security tax withheld", { x: x + boxW + gap, y + boxH + 4, font, size: 7 });
+  page.drawText("4 Social security tax withheld", { x: x + boxW + gap, y: y + boxH + 4, font, size: 7 });
   page.drawRectangle({ x: x + boxW + gap, y, width: boxW, height: boxH });
   page.drawText(formatBox(w2.socialSecurityTax), { x: x + boxW + gap + 4, y: y + 6, font, size: 10 });
   y -= boxH + gap;
 
-  page.drawText("5 Medicare wages and tips", { x, y + boxH + 4, font, size: 7 });
+  page.drawText("5 Medicare wages and tips", { x, y: y + boxH + 4, font, size: 7 });
   page.drawRectangle({ x, y, width: boxW, height: boxH });
   page.drawText(formatBox(w2.medicareWages), { x: x + 4, y: y + 6, font, size: 10 });
-  page.drawText("6 Medicare tax withheld", { x: x + boxW + gap, y + boxH + 4, font, size: 7 });
+  page.drawText("6 Medicare tax withheld", { x: x + boxW + gap, y: y + boxH + 4, font, size: 7 });
   page.drawRectangle({ x: x + boxW + gap, y, width: boxW, height: boxH });
   page.drawText(formatBox(w2.medicareTax), { x: x + boxW + gap + 4, y: y + 6, font, size: 10 });
 
