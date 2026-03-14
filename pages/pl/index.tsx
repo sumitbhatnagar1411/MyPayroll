@@ -138,6 +138,8 @@ export default function PLPage() {
   }, [year]);
 
   return (
+    <RequireAdmin>
+      <AdminLayout>
     <div className="min-h-screen p-8 max-w-4xl mx-auto">
       <Link href="/" className="text-slate-600 hover:text-slate-800 mb-6 inline-block">
         ← Back
