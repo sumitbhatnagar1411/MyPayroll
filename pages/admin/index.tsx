@@ -11,6 +11,7 @@ const cards = [
   { href: "/w2", title: "W-2 Generator", desc: "Generate W-2 tax forms", color: "amber", icon: "M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" },
   { href: "/expenses", title: "Expenses", desc: "Track business expenses", color: "rose", icon: "M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" },
   { href: "/pl", title: "P&L Report", desc: "Profit and loss statement", color: "teal", icon: "M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" },
+  { href: "/admin/documents", title: "Documents", desc: "Upload & manage employee documents", color: "indigo", icon: "M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 01-2 2z" },
 ];
 
 const colorMap: Record<string, string> = {
@@ -20,6 +21,7 @@ const colorMap: Record<string, string> = {
   amber: "bg-amber-50 border-amber-100 text-amber-700 hover:border-amber-300 group-hover:bg-amber-100",
   rose: "bg-rose-50 border-rose-100 text-rose-700 hover:border-rose-300 group-hover:bg-rose-100",
   teal: "bg-teal-50 border-teal-100 text-teal-700 hover:border-teal-300 group-hover:bg-teal-100",
+  indigo: "bg-indigo-50 border-indigo-100 text-indigo-700 hover:border-indigo-300 group-hover:bg-indigo-100",
 };
 
 export default function AdminDashboard() {
