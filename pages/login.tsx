@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { createBrowserClient } from "@/lib/supabase-client";
 
@@ -72,7 +73,11 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-100 p-4">
       <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-8">
-        <h1 className="text-2xl font-bold text-slate-800 mb-2 text-center">Neurons Technologies LLC - Payroll System</h1>
+        <div className="flex flex-col items-center mb-6">
+          <Image src="/logo.png" alt="Neurons Technologies LLC" width={80} height={80} className="mb-3" />
+          <h1 className="text-xl font-bold text-slate-800 text-center">Neurons Technologies LLC</h1>
+          <p className="text-sm text-slate-500 text-center">Payroll System</p>
+        </div>
         <p className="text-slate-500 text-center mb-6">
           {isForgotPassword ? "Reset your password" : isSignUp ? "Create your account" : "Sign in to your account"}
         </p>

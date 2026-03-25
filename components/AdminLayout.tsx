@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { useAuth } from "@/lib/auth-context";
 import { useRouter } from "next/router";
 
@@ -32,12 +33,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   return (
     <div className="min-h-screen bg-slate-100 flex">
       <aside className="w-64 bg-slate-800 text-white flex flex-col shrink-0">
-        <div className="p-6 border-b border-slate-700">
-          <Link href="/admin" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center font-bold text-white text-sm">
-              P
+        <div className="p-4 border-b border-slate-700">
+          <Link href="/admin" className="flex items-center gap-3">
+            <Image src="/logo.png" alt="Neurons Technologies LLC" width={40} height={40} className="rounded-lg bg-white p-0.5" />
+            <div>
+              <p className="font-bold text-sm text-white leading-tight">Neurons</p>
+              <p className="text-xs text-slate-400 leading-tight">Technologies LLC</p>
             </div>
-            <span className="font-semibold text-lg">Payroll</span>
           </Link>
         </div>
         <nav className="flex-1 p-3 space-y-0.5 overflow-y-auto">

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { useAuth } from "@/lib/auth-context";
 
@@ -101,11 +102,9 @@ export default function EmployeeDashboard() {
       <header className="bg-white border-b border-slate-200 shadow-sm">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-emerald-500 flex items-center justify-center text-white font-bold">
-              P
-            </div>
+            <Image src="/logo.png" alt="Neurons Technologies LLC" width={40} height={40} className="rounded-lg" />
             <div>
-              <h1 className="font-semibold text-slate-800">My Payroll</h1>
+              <h1 className="font-semibold text-slate-800">Neurons Technologies LLC</h1>
               <p className="text-xs text-slate-500">{user?.email}</p>
             </div>
           </div>
