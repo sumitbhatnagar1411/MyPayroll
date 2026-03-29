@@ -19,11 +19,19 @@ interface Payment {
   transaction_reference: string | null;
 }
 
+interface WorkLog {
+  id: string;
+  task: string;
+  hours: number;
+  date: string;
+}
+
 export default function EmployeeDashboard() {
   const { user, profile, loading, session, signOut } = useAuth();
   const router = useRouter();
   const [payrollRuns, setPayrollRuns] = useState<PayrollRun[]>([]);
   const [payments, setPayments] = useState<Payment[]>([]);
+  const [workLogs, setWorkLogs] = useState<WorkLog[]>([]);
   const [year, setYear] = useState(new Date().getFullYear());
   const [w2Loading, setW2Loading] = useState(false);
   const [employeeId, setEmployeeId] = useState<string | null>(null);
@@ -54,6 +62,12 @@ export default function EmployeeDashboard() {
         setPayrollRuns(d.payroll_runs || []);
         setPayments(d.payments || []);
       });
+    fetch(`/api/employee/my-work-logs?year=${year}`, {
+      headers: { Authorization: `Bearer ${session.access_token}` },
+    })
+      .then((r) => r.json())
+      .then((d) => setWorkLogs(d.work_logs || []))
+      .catch(() => {});
     fetch("/api/employee/me", { headers: { Authorization: `Bearer ${session.access_token}` } })
       .then((r) => r.json())
       .then((d) => d.id && setEmployeeId(d.id))
@@ -211,6 +225,43 @@ export default function EmployeeDashboard() {
                     <tr>
                       <td colSpan={3} className="py-12 text-center text-slate-500">
                         No payments for {year}
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* Work Logs */}
+          <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+            <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+              <h3 className="font-semibold text-slate-800">Work Log</h3>
+              <span className="text-xs bg-slate-100 text-slate-600 rounded-full px-2 py-0.5">
+                {workLogs.reduce((s, l) => s + l.hours, 0)} hrs total
+              </span>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="bg-slate-50">
+                    <th className="text-left py-3 px-4 font-medium text-slate-600">Date</th>
+                    <th className="text-left py-3 px-4 font-medium text-slate-600">Task</th>
+                    <th className="text-right py-3 px-4 font-medium text-slate-600">Hours</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {workLogs.map((log) => (
+                    <tr key={log.id} className="border-t border-slate-100 hover:bg-slate-50/50">
+                      <td className="py-3 px-4 text-slate-500">{log.date}</td>
+                      <td className="py-3 px-4 text-slate-700">{log.task}</td>
+                      <td className="text-right py-3 px-4 font-semibold text-slate-800">{log.hours}</td>
+                    </tr>
+                  ))}
+                  {workLogs.length === 0 && (
+                    <tr>
+                      <td colSpan={3} className="py-12 text-center text-slate-400">
+                        No work log entries for {year}
                       </td>
                     </tr>
                   )}
