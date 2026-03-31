@@ -32,18 +32,34 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const { supabaseAdmin } = ctx;
 
-  // GET - list work logs, optionally filtered by year and/or employee
+  // GET - list work logs, optionally filtered by year, month and/or employee
   if (req.method === "GET") {
     const year = req.query.year
       ? parseInt(String(req.query.year), 10)
       : new Date().getFullYear();
-    const start = `${year}-01-01`;
-    const end = `${year}-12-31`;
+    const month = req.query.month
+      ? parseInt(String(req.query.month), 10)
+      : null;
+
+    let start: string;
+    let end: string;
+
+    if (month) {
+      // Specific month in specific year
+      const startDate = new Date(year, month - 1, 1);
+      const endDate = new Date(year, month, 0);
+      start = startDate.toISOString().split("T")[0];
+      end = endDate.toISOString().split("T")[0];
+    } else {
+      // All months in the year
+      start = `${year}-01-01`;
+      end = `${year}-12-31`;
+    }
 
     let query = supabaseAdmin
       .from("work_logs")
       .select(
-        "id, task, hours, date, created_at, updated_at, employees(id, name, email)"
+        "id, task, hours, date, status, submitted_by, rejection_reason, created_at, updated_at, employees(id, name, email)"
       )
       .gte("date", start)
       .lte("date", end)
@@ -53,12 +69,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       query = query.eq("employee_id", String(req.query.employee_id));
     }
 
+    if (req.query.status) {
+      query = query.eq("status", String(req.query.status));
+    }
+
     const { data, error } = await query;
     if (error) return res.status(500).json({ error: error.message });
     return res.status(200).json({ work_logs: data || [] });
   }
 
-  // POST - create a new work log
+  // POST - create a new work log (admin only - auto-approved)
   if (req.method === "POST") {
     const { employee_id, task, hours, date } = req.body;
     if (!employee_id || !task?.trim() || hours == null || !date) {
@@ -72,14 +92,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
     const { data, error } = await supabaseAdmin
       .from("work_logs")
-      .insert({ employee_id, task: task.trim(), hours: parsedHours, date })
-      .select("id, task, hours, date, employees(id, name, email)")
+      .insert({ 
+        employee_id, 
+        task: task.trim(), 
+        hours: parsedHours, 
+        date,
+        status: "approved",
+        submitted_by: "admin"
+      })
+      .select("id, task, hours, date, status, submitted_by, employees(id, name, email)")
       .single();
     if (error) return res.status(500).json({ error: error.message });
     return res.status(201).json(data);
   }
 
-  // PUT - update an existing work log
+  // PUT - update an existing work log (admin only)
   if (req.method === "PUT") {
     const { id } = req.query;
     if (!id) return res.status(400).json({ error: "id query param required" });
@@ -103,9 +130,46 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       .from("work_logs")
       .update(updateData)
       .eq("id", String(id))
-      .select("id, task, hours, date, employees(id, name, email)")
+      .select("id, task, hours, date, status, submitted_by, employees(id, name, email)")
       .single();
     if (error) return res.status(500).json({ error: error.message });
+    return res.status(200).json(data);
+  }
+
+  // PATCH - approve or reject pending work logs
+  if (req.method === "PATCH") {
+    const { id } = req.query;
+    if (!id) return res.status(400).json({ error: "id query param required" });
+    
+    const { action, rejection_reason } = req.body;
+    if (!action || !["approve", "reject"].includes(action)) {
+      return res.status(400).json({ error: "action must be 'approve' or 'reject'" });
+    }
+
+    if (action === "reject" && !rejection_reason?.trim()) {
+      return res.status(400).json({ error: "rejection_reason is required for rejections" });
+    }
+
+    const updateData: Record<string, unknown> = {
+      status: action === "approve" ? "approved" : "rejected",
+      updated_at: new Date().toISOString(),
+    };
+
+    if (action === "reject") {
+      updateData.rejection_reason = rejection_reason.trim();
+    }
+
+    const { data, error } = await supabaseAdmin
+      .from("work_logs")
+      .update(updateData)
+      .eq("id", String(id))
+      .eq("status", "pending")
+      .select("id, task, hours, date, status, submitted_by, employees(id, name, email)")
+      .single();
+    
+    if (error) return res.status(500).json({ error: error.message });
+    if (!data) return res.status(404).json({ error: "Pending work log not found" });
+    
     return res.status(200).json(data);
   }
 

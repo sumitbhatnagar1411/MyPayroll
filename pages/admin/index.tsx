@@ -28,6 +28,8 @@ export default function AdminDashboard() {
   const { user, profile, loading } = useAuth();
   const router = useRouter();
   const [summary, setSummary] = useState<{ total_wages: number; total_employees: number; total_payroll_runs: number } | null>(null);
+  const [year, setYear] = useState(new Date().getFullYear());
+  const [month, setMonth] = useState(new Date().getMonth() + 1);
 
   useEffect(() => {
     if (loading) return;
@@ -39,8 +41,8 @@ export default function AdminDashboard() {
   }, [user, profile, loading, router]);
 
   useEffect(() => {
-    fetch("/api/payroll/summary").then((r) => r.json()).then(setSummary).catch(() => {});
-  }, []);
+    fetch(`/api/payroll/summary?year=${year}&month=${month}`).then((r) => r.json()).then(setSummary).catch(() => {});
+  }, [year, month]);
 
   if (loading || profile?.role !== "admin") {
     return (
@@ -55,9 +57,31 @@ export default function AdminDashboard() {
   return (
     <AdminLayout>
       <div className="p-8">
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold text-slate-800">Admin Dashboard</h1>
-          <p className="text-slate-500 mt-1">Manage payroll, employees, and reports</p>
+        <div className="mb-8 flex justify-between items-start">
+          <div>
+            <h1 className="text-2xl font-bold text-slate-800">Admin Dashboard</h1>
+            <p className="text-slate-500 mt-1">Manage payroll, employees, and reports</p>
+          </div>
+          <div className="flex gap-2">
+            <select
+              value={month}
+              onChange={(e) => setMonth(parseInt(e.target.value, 10))}
+              className="border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+            >
+              {['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'].map((m, i) => (
+                <option key={i + 1} value={i + 1}>{m}</option>
+              ))}
+            </select>
+            <select
+              value={year}
+              onChange={(e) => setYear(parseInt(e.target.value, 10))}
+              className="border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+            >
+              {[2024, 2025, 2026].map((y) => (
+                <option key={y} value={y}>{y}</option>
+              ))}
+            </select>
+          </div>
         </div>
 
         {summary && (

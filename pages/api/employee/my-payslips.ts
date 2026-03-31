@@ -22,8 +22,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (!emp) return res.status(404).json({ error: "Employee record not found" });
 
   const year = req.query.year ? parseInt(String(req.query.year), 10) : new Date().getFullYear();
-  const start = `${year}-01-01`;
-  const end = `${year}-12-31`;
+  const month = req.query.month ? parseInt(String(req.query.month), 10) : null;
+  
+  let start: string;
+  let end: string;
+  
+  if (month) {
+    const startDate = new Date(year, month - 1, 1);
+    const endDate = new Date(year, month, 0);
+    start = startDate.toISOString().split('T')[0];
+    end = endDate.toISOString().split('T')[0];
+  } else {
+    start = `${year}-01-01`;
+    end = `${year}-12-31`;
+  }
 
   const { data: runs } = await supabase
     .from("payroll_runs")

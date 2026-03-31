@@ -10,13 +10,41 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
   try {
     const supabase = createClient(supabaseUrl, supabaseKey);
+    const year = req.query.year ? parseInt(String(req.query.year), 10) : new Date().getFullYear();
+    const month = req.query.month ? parseInt(String(req.query.month), 10) : null;
+    
+    let startDate: string;
+    let endDate: string;
+    
+    if (month) {
+      const start = new Date(year, month - 1, 1);
+      const end = new Date(year, month, 0);
+      startDate = start.toISOString().split('T')[0];
+      endDate = end.toISOString().split('T')[0];
+    } else {
+      startDate = `${year}-01-01`;
+      endDate = `${year}-12-31`;
+    }
+    
     const { count: employeeCount } = await supabase
       .from("employees")
       .select("*", { count: "exact", head: true });
-    const { count: runCount } = await supabase
+    
+    let runsQuery = supabase
       .from("payroll_runs")
-      .select("*", { count: "exact", head: true });
-    const { data: runs } = await supabase.from("payroll_runs").select("gross_pay");
+      .select("*", { count: "exact", head: true })
+      .gte("date", startDate)
+      .lte("date", endDate);
+    
+    const { count: runCount } = await runsQuery;
+    
+    let dataQuery = supabase
+      .from("payroll_runs")
+      .select("gross_pay")
+      .gte("date", startDate)
+      .lte("date", endDate);
+    
+    const { data: runs } = await dataQuery;
     const totalWages = (runs || []).reduce((s, r) => s + Number(r.gross_pay || 0), 0);
     return res.status(200).json({
       total_wages: totalWages,

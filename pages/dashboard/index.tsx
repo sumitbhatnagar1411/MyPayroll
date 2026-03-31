@@ -33,6 +33,7 @@ export default function EmployeeDashboard() {
   const [payments, setPayments] = useState<Payment[]>([]);
   const [workLogs, setWorkLogs] = useState<WorkLog[]>([]);
   const [year, setYear] = useState(new Date().getFullYear());
+  const [month, setMonth] = useState(new Date().getMonth() + 1);
   const [w2Loading, setW2Loading] = useState(false);
   const [employeeId, setEmployeeId] = useState<string | null>(null);
 
@@ -54,7 +55,7 @@ export default function EmployeeDashboard() {
 
   useEffect(() => {
     if (!session?.access_token) return;
-    fetch(`/api/employee/my-payslips?year=${year}`, {
+    fetch(`/api/employee/my-payslips?year=${year}&month=${month}`, {
       headers: { Authorization: `Bearer ${session.access_token}` },
     })
       .then((r) => r.json())
@@ -62,7 +63,7 @@ export default function EmployeeDashboard() {
         setPayrollRuns(d.payroll_runs || []);
         setPayments(d.payments || []);
       });
-    fetch(`/api/employee/my-work-logs?year=${year}`, {
+    fetch(`/api/employee/my-work-logs?year=${year}&month=${month}`, {
       headers: { Authorization: `Bearer ${session.access_token}` },
     })
       .then((r) => r.json())
@@ -72,7 +73,7 @@ export default function EmployeeDashboard() {
       .then((r) => r.json())
       .then((d) => d.id && setEmployeeId(d.id))
       .catch(() => {});
-  }, [session?.access_token, year]);
+  }, [session?.access_token, year, month]);
 
   const downloadW2 = async () => {
     if (!employeeId) return;
@@ -137,7 +138,7 @@ export default function EmployeeDashboard() {
       <main className="flex-1 p-4 sm:p-6 max-w-4xl mx-auto w-full">
         <div className="mb-6">
           <h2 className="text-xl font-bold text-slate-800">Pay Overview</h2>
-          <p className="text-slate-500 text-sm mt-0.5">Your pay slips and payments for {year}</p>
+          <p className="text-slate-500 text-sm mt-0.5">Your pay slips and payments for {new Date(year, month - 1).toLocaleString('default', { month: 'long', year: 'numeric' })}</p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
@@ -159,15 +160,26 @@ export default function EmployeeDashboard() {
           <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
             <div className="px-6 py-4 border-b border-slate-100 flex flex-wrap justify-between items-center gap-3">
               <h3 className="font-semibold text-slate-800">Pay Slips</h3>
-              <select
-                value={year}
-                onChange={(e) => setYear(parseInt(e.target.value, 10))}
-                className="border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-              >
-                {[2024, 2025, 2026].map((y) => (
-                  <option key={y} value={y}>{y}</option>
-                ))}
-              </select>
+              <div className="flex gap-2">
+                <select
+                  value={month}
+                  onChange={(e) => setMonth(parseInt(e.target.value, 10))}
+                  className="border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                >
+                  {['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'].map((m, i) => (
+                    <option key={i + 1} value={i + 1}>{m}</option>
+                  ))}
+                </select>
+                <select
+                  value={year}
+                  onChange={(e) => setYear(parseInt(e.target.value, 10))}
+                  className="border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                >
+                  {[2024, 2025, 2026].map((y) => (
+                    <option key={y} value={y}>{y}</option>
+                  ))}
+                </select>
+              </div>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
@@ -193,7 +205,7 @@ export default function EmployeeDashboard() {
                   {payrollRuns.length === 0 && (
                     <tr>
                       <td colSpan={4} className="py-12 text-center text-slate-500">
-                        No pay slips for {year}
+                        No pay slips for {new Date(year, month - 1).toLocaleString('default', { month: 'long', year: 'numeric' })}
                       </td>
                     </tr>
                   )}
@@ -224,7 +236,7 @@ export default function EmployeeDashboard() {
                   {payments.length === 0 && (
                     <tr>
                       <td colSpan={3} className="py-12 text-center text-slate-500">
-                        No payments for {year}
+                        No payments for {new Date(year, month - 1).toLocaleString('default', { month: 'long', year: 'numeric' })}
                       </td>
                     </tr>
                   )}
@@ -235,11 +247,37 @@ export default function EmployeeDashboard() {
 
           {/* Work Logs */}
           <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-            <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+            <div className="px-6 py-4 border-b border-slate-100 flex flex-wrap justify-between items-center gap-3">
               <h3 className="font-semibold text-slate-800">Work Log</h3>
-              <span className="text-xs bg-slate-100 text-slate-600 rounded-full px-2 py-0.5">
-                {workLogs.reduce((s, l) => s + l.hours, 0)} hrs total
-              </span>
+              <div className="flex items-center gap-2 flex-wrap">
+                <select
+                  value={month}
+                  onChange={(e) => setMonth(parseInt(e.target.value, 10))}
+                  className="border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                >
+                  {['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'].map((m, i) => (
+                    <option key={i + 1} value={i + 1}>{m}</option>
+                  ))}
+                </select>
+                <select
+                  value={year}
+                  onChange={(e) => setYear(parseInt(e.target.value, 10))}
+                  className="border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                >
+                  {[2024, 2025, 2026].map((y) => (
+                    <option key={y} value={y}>{y}</option>
+                  ))}
+                </select>
+                <span className="text-xs bg-slate-100 text-slate-600 rounded-full px-2 py-0.5">
+                  {workLogs.reduce((s, l) => s + l.hours, 0)} hrs total
+                </span>
+                <button
+                  onClick={() => router.push("/employee/work-logs")}
+                  className="text-xs bg-emerald-600 text-white rounded-lg px-3 py-1.5 hover:bg-emerald-700 transition-colors font-medium"
+                >
+                  Add Work Log
+                </button>
+              </div>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
@@ -261,7 +299,7 @@ export default function EmployeeDashboard() {
                   {workLogs.length === 0 && (
                     <tr>
                       <td colSpan={3} className="py-12 text-center text-slate-400">
-                        No work log entries for {year}
+                        No work log entries for {new Date(year, month - 1).toLocaleString('default', { month: 'long', year: 'numeric' })}
                       </td>
                     </tr>
                   )}
