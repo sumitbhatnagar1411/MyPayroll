@@ -71,25 +71,25 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-100 p-4">
-      <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-8">
-        <div className="flex flex-col items-center mb-6">
-          <Image src="/logo.png" alt="Neurons Technologies LLC" width={80} height={80} className="mb-3" />
-          <h1 className="text-xl font-bold text-slate-800 text-center">Neurons Technologies LLC</h1>
-          <p className="text-sm text-slate-500 text-center">Payroll System</p>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 p-3 sm:p-4">
+      <div className="w-full max-w-md bg-white rounded-lg sm:rounded-xl shadow-lg p-4 sm:p-8">
+        <div className="flex flex-col items-center mb-6 sm:mb-8">
+          <Image src="/logo.png" alt="Neurons Technologies LLC" width={64} height={64} className="mb-3 sm:mb-4" />
+          <h1 className="text-lg sm:text-xl font-bold text-slate-800 text-center">Neurons Technologies</h1>
+          <p className="text-xs sm:text-sm text-slate-500 text-center">Payroll System</p>
         </div>
-        <p className="text-slate-500 text-center mb-6">
+        <p className="text-slate-600 text-xs sm:text-sm text-center mb-6 sm:mb-8">
           {isForgotPassword ? "Reset your password" : isSignUp ? "Create your account" : "Sign in to your account"}
         </p>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Email</label>
+            <label className="block text-xs sm:text-sm font-medium text-slate-700 mb-1.5">Email</label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+              className="w-full text-sm sm:text-base border border-slate-300 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
               placeholder="you@example.com"
               required
               autoComplete="email"
@@ -97,12 +97,12 @@ export default function LoginPage() {
           </div>
           {!isForgotPassword && (
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Password</label>
+              <label className="block text-xs sm:text-sm font-medium text-slate-700 mb-1.5">Password</label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                className="w-full text-sm sm:text-base border border-slate-300 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                 required={!isForgotPassword}
                 autoComplete={isSignUp ? "new-password" : "current-password"}
               />
@@ -110,19 +110,19 @@ export default function LoginPage() {
                 <button
                   type="button"
                   onClick={() => { setIsForgotPassword(true); setError(""); setSuccess(""); }}
-                  className="mt-1 text-sm text-slate-500 hover:text-emerald-600"
+                  className="mt-1.5 text-xs sm:text-sm text-slate-500 hover:text-emerald-600 transition-colors"
                 >
                   Forgot password?
                 </button>
               )}
             </div>
           )}
-          {error && <p className="text-red-600 text-sm">{error}</p>}
-          {success && <p className="text-emerald-600 text-sm">{success}</p>}
+          {error && <p className="text-red-600 text-xs sm:text-sm bg-red-50 p-3 rounded-lg">{error}</p>}
+          {success && <p className="text-emerald-600 text-xs sm:text-sm bg-emerald-50 p-3 rounded-lg">{success}</p>}
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-2.5 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 font-medium disabled:opacity-50"
+            className="w-full py-2.5 sm:py-3 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 font-medium text-sm sm:text-base disabled:opacity-50 transition-colors"
           >
             {loading
               ? (isForgotPassword ? "Sending..." : isSignUp ? "Creating account..." : "Signing in...")
@@ -134,7 +134,7 @@ export default function LoginPage() {
           </button>
         </form>
 
-        <p className="mt-4 text-center text-sm text-slate-500">
+        <p className="mt-4 sm:mt-6 text-center text-xs sm:text-sm text-slate-600">
           {isForgotPassword ? (
             <>
               <button

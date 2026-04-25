@@ -114,57 +114,57 @@ export default function EmployeeDashboard() {
 
   return (
     <div className="min-h-screen bg-slate-100 flex flex-col">
-      <header className="bg-white border-b border-slate-200 shadow-sm">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
-          <div className="flex items-center gap-3">
-            <Image src="/logo.png" alt="Neurons Technologies LLC" width={40} height={40} className="rounded-lg" />
-            <div>
-              <h1 className="font-semibold text-slate-800">Neurons Technologies LLC</h1>
-              <p className="text-xs text-slate-500">{user?.email}</p>
+      <header className="bg-white border-b border-slate-200 shadow-sm sticky top-0 z-50">
+        <div className="max-w-full px-3 sm:px-4 lg:px-6 py-3 sm:py-4 flex justify-between items-center gap-2 sm:gap-4">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+            <Image src="/logo.png" alt="Neurons Technologies LLC" width={36} height={36} className="rounded-lg flex-shrink-0" />
+            <div className="min-w-0">
+              <h1 className="font-semibold text-sm sm:text-base text-slate-800 truncate">Neurons Tech</h1>
+              <p className="text-xs text-slate-500 truncate">{user?.email}</p>
             </div>
           </div>
           <button
             onClick={handleSignOut}
-            className="flex items-center gap-2 px-3 py-2 text-sm text-slate-600 hover:text-red-600 hover:bg-slate-50 rounded-lg transition-colors"
+            className="flex-shrink-0 flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-2 text-xs sm:text-sm text-slate-600 hover:text-red-600 hover:bg-slate-50 rounded-lg transition-colors"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 sm:w-5 h-4 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
             </svg>
-            Sign out
+            <span className="hidden xs:inline">Sign out</span>
           </button>
         </div>
       </header>
 
-      <main className="flex-1 p-4 sm:p-6 max-w-4xl mx-auto w-full">
-        <div className="mb-6">
-          <h2 className="text-xl font-bold text-slate-800">Pay Overview</h2>
-          <p className="text-slate-500 text-sm mt-0.5">Your pay slips and payments for {new Date(year, month - 1).toLocaleString('default', { month: 'long', year: 'numeric' })}</p>
+      <main className="flex-1 p-3 sm:p-4 lg:p-6 w-full">
+        <div className="mb-4 sm:mb-6">
+          <h2 className="text-lg sm:text-2xl font-bold text-slate-800">Pay Overview</h2>
+          <p className="text-xs sm:text-sm text-slate-500 mt-1 sm:mt-2">Your pay slips and payments for {new Date(year, month - 1).toLocaleString('default', { month: 'long', year: 'numeric' })}</p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 mb-4 sm:mb-6">
+          <div className="bg-white rounded-lg sm:rounded-xl shadow-sm border border-slate-200 p-3 sm:p-4">
             <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">Total Gross</p>
-            <p className="text-xl font-bold text-slate-800 mt-1">{formatCurrency(totalGross)}</p>
+            <p className="text-lg sm:text-xl font-bold text-slate-800 mt-1 sm:mt-2">{formatCurrency(totalGross)}</p>
           </div>
-          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+          <div className="bg-white rounded-lg sm:rounded-xl shadow-sm border border-slate-200 p-3 sm:p-4">
             <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">Net Pay</p>
-            <p className="text-xl font-bold text-emerald-600 mt-1">{formatCurrency(totalNet)}</p>
+            <p className="text-lg sm:text-xl font-bold text-emerald-600 mt-1 sm:mt-2">{formatCurrency(totalNet)}</p>
           </div>
-          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+          <div className="bg-white rounded-lg sm:rounded-xl shadow-sm border border-slate-200 p-3 sm:p-4">
             <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">Payments Received</p>
-            <p className="text-xl font-bold text-sky-600 mt-1">{formatCurrency(totalPaid)}</p>
+            <p className="text-lg sm:text-xl font-bold text-sky-600 mt-1 sm:mt-2">{formatCurrency(totalPaid)}</p>
           </div>
         </div>
 
-        <div className="space-y-6">
-          <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-            <div className="px-6 py-4 border-b border-slate-100 flex flex-wrap justify-between items-center gap-3">
-              <h3 className="font-semibold text-slate-800">Pay Slips</h3>
-              <div className="flex gap-2">
+        <div className="space-y-4 sm:space-y-6">
+          <div className="bg-white rounded-lg sm:rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+            <div className="px-3 sm:px-6 py-3 sm:py-4 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <h3 className="font-semibold text-slate-800 text-sm sm:text-base">Pay Slips</h3>
+              <div className="flex gap-2 flex-wrap">
                 <select
                   value={month}
                   onChange={(e) => setMonth(parseInt(e.target.value, 10))}
-                  className="border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                  className="text-xs sm:text-sm border border-slate-200 rounded-lg px-2 sm:px-3 py-2 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                 >
                   {['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'].map((m, i) => (
                     <option key={i + 1} value={i + 1}>{m}</option>
@@ -173,7 +173,7 @@ export default function EmployeeDashboard() {
                 <select
                   value={year}
                   onChange={(e) => setYear(parseInt(e.target.value, 10))}
-                  className="border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                  className="text-xs sm:text-sm border border-slate-200 rounded-lg px-2 sm:px-3 py-2 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                 >
                   {[2024, 2025, 2026].map((y) => (
                     <option key={y} value={y}>{y}</option>
@@ -182,29 +182,29 @@ export default function EmployeeDashboard() {
               </div>
             </div>
             <div className="overflow-x-auto">
-              <table className="w-full text-sm">
+              <table className="w-full text-xs sm:text-sm">
                 <thead>
-                  <tr className="bg-slate-50">
-                    <th className="text-left py-3 px-4 font-medium text-slate-600">Date</th>
-                    <th className="text-right py-3 px-4 font-medium text-slate-600">Gross Pay</th>
-                    <th className="text-right py-3 px-4 font-medium text-slate-600">Tax Withheld</th>
-                    <th className="text-right py-3 px-4 font-medium text-slate-600">Net</th>
+                  <tr className="bg-slate-50 border-b border-slate-100">
+                    <th className="text-left py-2 sm:py-3 px-3 sm:px-4 font-medium text-slate-600">Date</th>
+                    <th className="text-right py-2 sm:py-3 px-3 sm:px-4 font-medium text-slate-600">Gross Pay</th>
+                    <th className="text-right py-2 sm:py-3 px-3 sm:px-4 font-medium text-slate-600 hidden sm:table-cell">Tax</th>
+                    <th className="text-right py-2 sm:py-3 px-3 sm:px-4 font-medium text-slate-600">Net</th>
                   </tr>
                 </thead>
                 <tbody>
                   {payrollRuns.map((r) => (
-                    <tr key={r.id} className="border-t border-slate-100 hover:bg-slate-50/50">
-                      <td className="py-3 px-4">{r.date}</td>
-                      <td className="text-right py-3 px-4">{formatCurrency(r.gross_pay)}</td>
-                      <td className="text-right py-3 px-4 text-slate-500">{formatCurrency(r.tax_withheld)}</td>
-                      <td className="text-right py-3 px-4 font-semibold text-emerald-600">
+                    <tr key={r.id} className="border-b border-slate-100 hover:bg-slate-50/50">
+                      <td className="py-2 sm:py-3 px-3 sm:px-4 text-slate-600">{r.date}</td>
+                      <td className="text-right py-2 sm:py-3 px-3 sm:px-4 text-slate-700 font-medium">{formatCurrency(r.gross_pay)}</td>
+                      <td className="text-right py-2 sm:py-3 px-3 sm:px-4 text-slate-500 hidden sm:table-cell">{formatCurrency(r.tax_withheld)}</td>
+                      <td className="text-right py-2 sm:py-3 px-3 sm:px-4 font-semibold text-emerald-600">
                         {formatCurrency(r.gross_pay - r.tax_withheld)}
                       </td>
                     </tr>
                   ))}
                   {payrollRuns.length === 0 && (
                     <tr>
-                      <td colSpan={4} className="py-12 text-center text-slate-500">
+                      <td colSpan={4} className="py-8 sm:py-12 text-center text-slate-400 text-sm">
                         No pay slips for {new Date(year, month - 1).toLocaleString('default', { month: 'long', year: 'numeric' })}
                       </td>
                     </tr>
@@ -214,28 +214,28 @@ export default function EmployeeDashboard() {
             </div>
           </div>
 
-          <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-            <h3 className="px-6 py-4 border-b border-slate-100 font-semibold text-slate-800">Payments Received</h3>
+          <div className="bg-white rounded-lg sm:rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+            <h3 className="px-3 sm:px-6 py-3 sm:py-4 border-b border-slate-100 font-semibold text-slate-800 text-sm sm:text-base">Payments Received</h3>
             <div className="overflow-x-auto">
-              <table className="w-full text-sm">
+              <table className="w-full text-xs sm:text-sm">
                 <thead>
-                  <tr className="bg-slate-50">
-                    <th className="text-left py-3 px-4 font-medium text-slate-600">Date</th>
-                    <th className="text-right py-3 px-4 font-medium text-slate-600">Amount</th>
-                    <th className="text-left py-3 px-4 font-medium text-slate-600">Method</th>
+                  <tr className="bg-slate-50 border-b border-slate-100">
+                    <th className="text-left py-2 sm:py-3 px-3 sm:px-4 font-medium text-slate-600">Date</th>
+                    <th className="text-right py-2 sm:py-3 px-3 sm:px-4 font-medium text-slate-600">Amount</th>
+                    <th className="text-left py-2 sm:py-3 px-3 sm:px-4 font-medium text-slate-600 hidden sm:table-cell">Method</th>
                   </tr>
                 </thead>
                 <tbody>
                   {payments.map((p) => (
-                    <tr key={p.id} className="border-t border-slate-100 hover:bg-slate-50/50">
-                      <td className="py-3 px-4">{p.date}</td>
-                      <td className="text-right py-3 px-4 font-semibold text-sky-600">{formatCurrency(p.amount)}</td>
-                      <td className="py-3 px-4 text-slate-500">{p.method || "—"}</td>
+                    <tr key={p.id} className="border-b border-slate-100 hover:bg-slate-50/50">
+                      <td className="py-2 sm:py-3 px-3 sm:px-4 text-slate-600">{p.date}</td>
+                      <td className="text-right py-2 sm:py-3 px-3 sm:px-4 font-semibold text-sky-600">{formatCurrency(p.amount)}</td>
+                      <td className="py-2 sm:py-3 px-3 sm:px-4 text-slate-500 hidden sm:table-cell text-xs">{p.method || "—"}</td>
                     </tr>
                   ))}
                   {payments.length === 0 && (
                     <tr>
-                      <td colSpan={3} className="py-12 text-center text-slate-500">
+                      <td colSpan={3} className="py-8 sm:py-12 text-center text-slate-400 text-sm">
                         No payments for {new Date(year, month - 1).toLocaleString('default', { month: 'long', year: 'numeric' })}
                       </td>
                     </tr>
@@ -246,14 +246,14 @@ export default function EmployeeDashboard() {
           </div>
 
           {/* Work Logs */}
-          <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-            <div className="px-6 py-4 border-b border-slate-100 flex flex-wrap justify-between items-center gap-3">
-              <h3 className="font-semibold text-slate-800">Work Log</h3>
+          <div className="bg-white rounded-lg sm:rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+            <div className="px-3 sm:px-6 py-3 sm:py-4 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <h3 className="font-semibold text-slate-800 text-sm sm:text-base">Work Log</h3>
               <div className="flex items-center gap-2 flex-wrap">
                 <select
                   value={month}
                   onChange={(e) => setMonth(parseInt(e.target.value, 10))}
-                  className="border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                  className="text-xs sm:text-sm border border-slate-200 rounded-lg px-2 sm:px-3 py-2 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                 >
                   {['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'].map((m, i) => (
                     <option key={i + 1} value={i + 1}>{m}</option>
@@ -262,44 +262,44 @@ export default function EmployeeDashboard() {
                 <select
                   value={year}
                   onChange={(e) => setYear(parseInt(e.target.value, 10))}
-                  className="border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                  className="text-xs sm:text-sm border border-slate-200 rounded-lg px-2 sm:px-3 py-2 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                 >
                   {[2024, 2025, 2026].map((y) => (
                     <option key={y} value={y}>{y}</option>
                   ))}
                 </select>
-                <span className="text-xs bg-slate-100 text-slate-600 rounded-full px-2 py-0.5">
-                  {workLogs.reduce((s, l) => s + l.hours, 0)} hrs total
+                <span className="text-xs bg-slate-100 text-slate-600 rounded-full px-2.5 py-1 whitespace-nowrap">
+                  {workLogs.reduce((s, l) => s + l.hours, 0)} hrs
                 </span>
                 <button
                   onClick={() => router.push("/employee/work-logs")}
-                  className="text-xs bg-emerald-600 text-white rounded-lg px-3 py-1.5 hover:bg-emerald-700 transition-colors font-medium"
+                  className="text-xs sm:text-sm bg-emerald-600 text-white rounded-lg px-3 py-2 hover:bg-emerald-700 transition-colors font-medium whitespace-nowrap"
                 >
-                  Add Work Log
+                  + Add
                 </button>
               </div>
             </div>
             <div className="overflow-x-auto">
-              <table className="w-full text-sm">
+              <table className="w-full text-xs sm:text-sm">
                 <thead>
-                  <tr className="bg-slate-50">
-                    <th className="text-left py-3 px-4 font-medium text-slate-600">Date</th>
-                    <th className="text-left py-3 px-4 font-medium text-slate-600">Task</th>
-                    <th className="text-right py-3 px-4 font-medium text-slate-600">Hours</th>
+                  <tr className="bg-slate-50 border-b border-slate-100">
+                    <th className="text-left py-2 sm:py-3 px-3 sm:px-4 font-medium text-slate-600">Date</th>
+                    <th className="text-left py-2 sm:py-3 px-3 sm:px-4 font-medium text-slate-600">Task</th>
+                    <th className="text-right py-2 sm:py-3 px-3 sm:px-4 font-medium text-slate-600">Hours</th>
                   </tr>
                 </thead>
                 <tbody>
                   {workLogs.map((log) => (
-                    <tr key={log.id} className="border-t border-slate-100 hover:bg-slate-50/50">
-                      <td className="py-3 px-4 text-slate-500">{log.date}</td>
-                      <td className="py-3 px-4 text-slate-700">{log.task}</td>
-                      <td className="text-right py-3 px-4 font-semibold text-slate-800">{log.hours}</td>
+                    <tr key={log.id} className="border-b border-slate-100 hover:bg-slate-50/50">
+                      <td className="py-2 sm:py-3 px-3 sm:px-4 text-slate-600">{log.date}</td>
+                      <td className="py-2 sm:py-3 px-3 sm:px-4 text-slate-700 max-w-xs truncate">{log.task}</td>
+                      <td className="text-right py-2 sm:py-3 px-3 sm:px-4 font-semibold text-slate-800">{log.hours}</td>
                     </tr>
                   ))}
                   {workLogs.length === 0 && (
                     <tr>
-                      <td colSpan={3} className="py-12 text-center text-slate-400">
-                        No work log entries for {new Date(year, month - 1).toLocaleString('default', { month: 'long', year: 'numeric' })}
+                      <td colSpan={3} className="py-8 sm:py-12 text-center text-slate-400 text-sm">
+                        No work logs for {new Date(year, month - 1).toLocaleString('default', { month: 'long', year: 'numeric' })}
                       </td>
                     </tr>
                   )}
@@ -308,40 +308,40 @@ export default function EmployeeDashboard() {
             </div>
           </div>
 
-          <div className="bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl shadow-sm p-6 text-white">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="bg-gradient-to-br from-emerald-500 to-teal-600 rounded-lg sm:rounded-xl shadow-sm p-4 sm:p-6 text-white">
+            <div className="flex flex-col gap-4">
               <div>
-                <h3 className="font-semibold text-lg">W-2 Tax Form</h3>
-                <p className="text-emerald-100 text-sm mt-1">
+                <h3 className="font-semibold text-base sm:text-lg">W-2 Tax Form</h3>
+                <p className="text-emerald-100 text-xs sm:text-sm mt-1">
                   Download your W-2 for tax year {year}
                 </p>
               </div>
               <button
                 onClick={downloadW2}
                 disabled={w2Loading || !employeeId}
-                className="shrink-0 px-6 py-3 bg-white text-emerald-700 font-semibold rounded-lg hover:bg-emerald-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm"
+                className="w-full sm:w-auto px-4 sm:px-6 py-3 bg-white text-emerald-700 font-semibold rounded-lg hover:bg-emerald-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm sm:text-base"
               >
                 {w2Loading ? "Generating..." : "Download W-2"}
               </button>
             </div>
           </div>
 
-          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+          <div className="bg-white rounded-lg sm:rounded-xl shadow-sm border border-slate-200 p-4 sm:p-6">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-indigo-50 flex items-center justify-center">
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="w-10 h-10 rounded-lg bg-indigo-50 flex items-center justify-center flex-shrink-0">
                   <svg className="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 01-2 2z" />
                   </svg>
                 </div>
-                <div>
-                  <h3 className="font-semibold text-slate-800">My Documents</h3>
-                  <p className="text-slate-500 text-sm mt-0.5">View offer letters and other documents shared by HR</p>
+                <div className="min-w-0 flex-1">
+                  <h3 className="font-semibold text-slate-800 text-sm sm:text-base">My Documents</h3>
+                  <p className="text-slate-500 text-xs sm:text-sm mt-0.5">View your HR documents</p>
                 </div>
               </div>
               <button
                 onClick={() => router.push("/documents")}
-                className="shrink-0 px-5 py-2.5 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors"
+                className="w-full sm:w-auto flex-shrink-0 px-4 sm:px-5 py-2.5 bg-indigo-600 text-white text-xs sm:text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors"
               >
                 View Documents
               </button>

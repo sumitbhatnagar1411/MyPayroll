@@ -218,24 +218,24 @@ export default function AdminWorkLogsPage() {
 
   return (
     <AdminLayout>
-      <div className="p-8">
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold text-slate-800">Work Logs</h1>
-          <p className="text-slate-500 mt-1">Record and manage tasks employees performed to earn their pay</p>
+      <div className="p-3 sm:p-4 lg:p-8">
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-800">Work Logs</h1>
+          <p className="text-xs sm:text-sm text-slate-600 mt-1 sm:mt-2">Record and manage tasks employees performed to earn their pay</p>
         </div>
 
         {/* Add / Edit Form */}
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 mb-8">
-          <h2 className="text-lg font-semibold text-slate-800 mb-4">
+        <div className="bg-white rounded-lg sm:rounded-xl shadow-sm border border-slate-200 p-4 sm:p-6 mb-6 sm:mb-8">
+          <h2 className="text-base sm:text-lg font-semibold text-slate-800 mb-4">
             {editingId ? "Edit Work Log" : "Add Work Log"}
           </h2>
-          <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Employee</label>
+              <label className="block text-xs sm:text-sm font-medium text-slate-700 mb-1.5">Employee</label>
               <select
                 value={form.employee_id}
                 onChange={(e) => setForm({ ...form, employee_id: e.target.value })}
-                className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                className="w-full text-sm sm:text-base border border-slate-300 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                 required
               >
                 <option value="">Select employee…</option>
@@ -245,20 +245,20 @@ export default function AdminWorkLogsPage() {
               </select>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Task / Description</label>
+            <div className="sm:col-span-1">
+              <label className="block text-xs sm:text-sm font-medium text-slate-700 mb-1.5">Task / Description</label>
               <input
                 type="text"
                 value={form.task}
                 onChange={(e) => setForm({ ...form, task: e.target.value })}
                 placeholder="e.g. Frontend development"
-                className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                className="w-full text-sm sm:text-base border border-slate-300 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Hours</label>
+              <label className="block text-xs sm:text-sm font-medium text-slate-700 mb-1.5">Hours</label>
               <input
                 type="number"
                 step="0.5"
@@ -266,18 +266,18 @@ export default function AdminWorkLogsPage() {
                 value={form.hours}
                 onChange={(e) => setForm({ ...form, hours: e.target.value })}
                 placeholder="8"
-                className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                className="w-full text-sm sm:text-base border border-slate-300 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Date</label>
+              <label className="block text-xs sm:text-sm font-medium text-slate-700 mb-1.5">Date</label>
               <input
                 type="date"
                 value={form.date}
                 onChange={(e) => setForm({ ...form, date: e.target.value })}
-                className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                className="w-full text-sm sm:text-base border border-slate-300 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                 required
               />
             </div>
@@ -290,7 +290,7 @@ export default function AdminWorkLogsPage() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="px-5 py-2 bg-emerald-600 text-white text-sm font-semibold rounded-lg hover:bg-emerald-700 disabled:opacity-50 transition-colors"
+                className="flex-1 sm:flex-none px-5 py-2.5 sm:py-3 bg-emerald-600 text-white text-sm sm:text-base font-semibold rounded-lg hover:bg-emerald-700 disabled:opacity-50 transition-colors"
               >
                 {submitting ? "Saving…" : editingId ? "Update Entry" : "Add Entry"}
               </button>
@@ -298,7 +298,7 @@ export default function AdminWorkLogsPage() {
                 <button
                   type="button"
                   onClick={cancelEdit}
-                  className="px-5 py-2 bg-slate-100 text-slate-700 text-sm font-semibold rounded-lg hover:bg-slate-200 transition-colors"
+                  className="flex-1 sm:flex-none px-5 py-2.5 sm:py-3 bg-slate-100 text-slate-700 text-sm sm:text-base font-semibold rounded-lg hover:bg-slate-200 transition-colors"
                 >
                   Cancel
                 </button>
@@ -308,16 +308,16 @@ export default function AdminWorkLogsPage() {
         </div>
 
         {/* Filters & Stats */}
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden mb-8">
-          <div className="px-6 py-4 border-b border-slate-100 flex flex-wrap justify-between items-center gap-3">
+        <div className="bg-white rounded-lg sm:rounded-xl shadow-sm border border-slate-200 overflow-hidden mb-6 sm:mb-8">
+          <div className="px-3 sm:px-6 py-3 sm:py-4 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <div className="flex items-center gap-2">
-              <h2 className="font-semibold text-slate-800">Status Overview</h2>
+              <h2 className="font-semibold text-slate-800 text-sm sm:text-base">Status Overview</h2>
             </div>
-            <div className="flex gap-3 flex-wrap">
+            <div className="flex gap-2 sm:gap-3 flex-wrap">
               <select
                 value={filterEmployee}
                 onChange={(e) => setFilterEmployee(e.target.value)}
-                className="border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500"
+                className="text-xs sm:text-sm border border-slate-200 rounded-lg px-2 sm:px-3 py-2 focus:ring-2 focus:ring-emerald-500"
               >
                 <option value="">All employees</option>
                 {employees.map((emp) => (
@@ -327,7 +327,7 @@ export default function AdminWorkLogsPage() {
               <select
                 value={year}
                 onChange={(e) => setYear(parseInt(e.target.value, 10))}
-                className="border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500"
+                className="text-xs sm:text-sm border border-slate-200 rounded-lg px-2 sm:px-3 py-2 focus:ring-2 focus:ring-emerald-500"
               >
                 {[2024, 2025, 2026].map((y) => (
                   <option key={y} value={y}>{y}</option>

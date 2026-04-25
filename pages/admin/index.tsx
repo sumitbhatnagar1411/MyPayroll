@@ -56,17 +56,17 @@ export default function AdminDashboard() {
 
   return (
     <AdminLayout>
-      <div className="p-8">
-        <div className="mb-8 flex justify-between items-start">
-          <div>
-            <h1 className="text-2xl font-bold text-slate-800">Admin Dashboard</h1>
-            <p className="text-slate-500 mt-1">Manage payroll, employees, and reports</p>
+      <div className="p-3 sm:p-4 lg:p-8">
+        <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4">
+          <div className="min-w-0">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-800">Admin Dashboard</h1>
+            <p className="text-sm sm:text-base text-slate-500 mt-1 sm:mt-2">Manage payroll, employees, and reports</p>
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 flex-wrap">
             <select
               value={month}
               onChange={(e) => setMonth(parseInt(e.target.value, 10))}
-              className="border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+              className="text-xs sm:text-sm border border-slate-200 rounded-lg px-2 sm:px-3 py-2 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
             >
               {['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'].map((m, i) => (
                 <option key={i + 1} value={i + 1}>{m}</option>
@@ -75,7 +75,7 @@ export default function AdminDashboard() {
             <select
               value={year}
               onChange={(e) => setYear(parseInt(e.target.value, 10))}
-              className="border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+              className="text-xs sm:text-sm border border-slate-200 rounded-lg px-2 sm:px-3 py-2 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
             >
               {[2024, 2025, 2026].map((y) => (
                 <option key={y} value={y}>{y}</option>
@@ -85,38 +85,38 @@ export default function AdminDashboard() {
         </div>
 
         {summary && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-              <p className="text-sm font-medium text-slate-500">Total Wages</p>
-              <p className="text-2xl font-bold text-slate-800 mt-1">{formatCurrency(summary.total_wages)}</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 mb-6 sm:mb-8">
+            <div className="bg-white rounded-lg sm:rounded-xl shadow-sm border border-slate-200 p-4 sm:p-6">
+              <p className="text-xs sm:text-sm font-medium text-slate-500 uppercase tracking-wide">Total Wages</p>
+              <p className="text-xl sm:text-2xl font-bold text-slate-800 mt-1 sm:mt-2">{formatCurrency(summary.total_wages)}</p>
             </div>
-            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-              <p className="text-sm font-medium text-slate-500">Employees</p>
-              <p className="text-2xl font-bold text-slate-800 mt-1">{summary.total_employees}</p>
+            <div className="bg-white rounded-lg sm:rounded-xl shadow-sm border border-slate-200 p-4 sm:p-6">
+              <p className="text-xs sm:text-sm font-medium text-slate-500 uppercase tracking-wide">Employees</p>
+              <p className="text-xl sm:text-2xl font-bold text-slate-800 mt-1 sm:mt-2">{summary.total_employees}</p>
             </div>
-            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-              <p className="text-sm font-medium text-slate-500">Payroll Runs</p>
-              <p className="text-2xl font-bold text-slate-800 mt-1">{summary.total_payroll_runs}</p>
+            <div className="bg-white rounded-lg sm:rounded-xl shadow-sm border border-slate-200 p-4 sm:p-6">
+              <p className="text-xs sm:text-sm font-medium text-slate-500 uppercase tracking-wide">Payroll Runs</p>
+              <p className="text-xl sm:text-2xl font-bold text-slate-800 mt-1 sm:mt-2">{summary.total_payroll_runs}</p>
             </div>
           </div>
         )}
 
-        <h2 className="text-lg font-semibold text-slate-800 mb-4">Quick Actions</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <h2 className="text-base sm:text-lg font-semibold text-slate-800 mb-3 sm:mb-4">Quick Actions</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           {cards.map((card) => (
             <Link
               key={card.href}
               href={card.href}
-              className="group flex items-start gap-4 p-6 bg-white rounded-xl shadow-sm border border-slate-200 hover:shadow-md hover:border-slate-300 transition-all duration-200"
+              className="group flex items-start gap-3 sm:gap-4 p-4 sm:p-6 bg-white rounded-lg sm:rounded-xl shadow-sm border border-slate-200 hover:shadow-md hover:border-slate-300 transition-all duration-200"
             >
-              <div className={`w-12 h-12 rounded-xl flex items-center justify-center border shrink-0 transition-colors ${colorMap[card.color]}`}>
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className={`w-10 sm:w-12 h-10 sm:h-12 rounded-lg sm:rounded-xl flex items-center justify-center border shrink-0 transition-colors ${colorMap[card.color]}`}>
+                <svg className="w-5 sm:w-6 h-5 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={card.icon} />
                 </svg>
               </div>
               <div className="min-w-0 flex-1">
-                <h3 className="font-semibold text-slate-800 group-hover:text-emerald-600 transition-colors">{card.title}</h3>
-                <p className="text-sm text-slate-500 mt-0.5">{card.desc}</p>
+                <h3 className="font-semibold text-sm sm:text-base text-slate-800 group-hover:text-emerald-600 transition-colors">{card.title}</h3>
+                <p className="text-xs sm:text-sm text-slate-500 mt-0.5">{card.desc}</p>
               </div>
               <svg className="w-5 h-5 text-slate-300 group-hover:text-emerald-500 shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
